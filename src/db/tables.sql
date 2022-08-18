@@ -1,23 +1,23 @@
-CREATE TABLE users (
+CREATE TABLE cakes (
   id SERIAL PRIMARY KEY,
-  name TEXT NOT NULL,
-  email TEXT NOT NULL UNIQUE,
-  password TEXT NOT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  name varchar NOT NULL UNIQUE,
+  price NUMERIC NOT NULL,
+  image varchar NOT NULL,
+  description TEXT
 );
 
-CREATE TABLE sessions (
+CREATE TABLE clients (
+  id SERIAL PRIMARY KEY,
+  name varchar NOT NULL,
+  address varchar NOT NULL,
+  phone varchar(11) NOT NULL
+);
+
+CREATE TABLE orders (
    id SERIAL PRIMARY KEY,
-   token TEXT NOT NULL UNIQUE,
-   "userId" INT NOT NULL REFERENCES users(id),
-   "createdAt" TIMESTAMP DEFAULT NOW()
-);
-
-CREATE TABLE urls (
-  id SERIAL PRIMARY KEY,
-  url TEXT NOT NULL,
-  "shortUrl" TEXT NOT NULL UNIQUE,
-  "visitCount" INTEGER NOT NULL DEFAULT 0,
-  "userId" INTEGER REFERENCES users(id),
-  "createdAt" TIMESTAMP DEFAULT NOW()
+   "clientId" INT NOT NULL REFERENCES clients(id),
+   "cakeId" INT NOT NULL REFERENCES cakes(id),
+   quantity INT NOT NULL,
+   "createdAt" TIMESTAMP DEFAULT NOW(),
+   totalPrice NUMERIC NOT NULL
 );

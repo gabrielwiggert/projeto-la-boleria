@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import signupRouter from './signupRouter.js';
+import cakesRouter from './cakesRouter.js';
 
 const router = Router();
 
-router.use(signupRouter);
+router.use(cakesRouter);
 
 export default router;
