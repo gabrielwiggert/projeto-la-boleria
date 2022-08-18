@@ -19,5 +19,5 @@ CREATE TABLE orders (
    "cakeId" INT NOT NULL REFERENCES cakes(id),
    quantity INT NOT NULL,
    "createdAt" TIMESTAMP DEFAULT NOW(),
-   totalPrice NUMERIC NOT NULL
+   "totalPrice" NUMERIC NOT NULL
 );
