@@ -27,3 +27,26 @@ export async function getOrders(req, res) {
     return res.sendStatus(500);
   }
 }
+
+export async function getOrdersById(req, res) {
+  let { id } = req.params;
+
+  let resultOrders = await ordersRepository.getOrdersById(id);
+
+  if (resultOrders.rowCount === 0) {
+    return res.status(404).send(resultOrders.rows);
+  }
+  
+  try {
+     for (let i = 0; i < resultOrders.rowCount; i++) {
+      let clientInfo = await ordersRepository.getClients(resultOrders.rows[i].client);
+      let cakeInfo = await ordersRepository.getCakes(resultOrders.rows[i].cake);
+      resultOrders.rows[i].client = clientInfo.rows[0];
+      resultOrders.rows[i].cake = cakeInfo.rows[0];
+     }
+    res.status(200).send(resultOrders.rows);
+  } catch (error) {
+    console.log(error);
+    return res.sendStatus(500);
+  }
+}
