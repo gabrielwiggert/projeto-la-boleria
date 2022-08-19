@@ -2,8 +2,13 @@ import ordersRepository from '../repositories/ordersRepository.js';
 
 export async function getOrders(req, res) {
   let { date } = req.query;
+  let resultOrders;
 
-  let resultOrders = await ordersRepository.getOrders();
+  if (date) {
+    resultOrders = await ordersRepository.getOrdersFromDate(date);
+  } else {
+    resultOrders = await ordersRepository.getOrders();
+  }
 
   if (resultOrders.rowCount === 0) {
     return res.status(404).send(resultOrders.rows);
